@@ -1,6 +1,5 @@
 import React from 'react';
 import './App.css';
-import Nav from './components/Nav';
 import Dashboard from './pages/Dashboard';
 import Users from './pages/Users';
 import Register from './pages/Register';
@@ -15,7 +14,8 @@ function App() {
         <Route path={'/register'} component={Register} />
 
       </BrowserRouter>
-    </div>);
+    </div>
+  );
 }
 
 export default App;
