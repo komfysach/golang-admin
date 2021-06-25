@@ -1,9 +1,9 @@
 package models
 
 import (
-	"golang.org/x/crypto/bcrypt"	"gorm.io/gorm"
+	"golang.org/x/crypto/bcrypt"
+	"gorm.io/gorm"
 )
-
 
 type User struct {
 	Id        uint   `json:"id"`
