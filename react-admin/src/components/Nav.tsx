@@ -5,9 +5,7 @@ import { Link } from 'react-router-dom';
 
 const Nav = () => {
     const [user, setUser] = useState(
-        {
-            first_name: ''
-        });
+        new User());
 
     const logout = async () => {
         await axios.post('logout', {});
@@ -17,7 +15,12 @@ const Nav = () => {
         (async () => {
             const { data } = await axios.get('user');
 
-            setUser(data);
+            setUser(new User(
+                data.id,
+                data.first_name,
+                data.last_name,
+                data.email,
+            ));
         })();
     }, []);
     return (
@@ -27,7 +30,7 @@ const Nav = () => {
             <a className="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">Company name</a>
             <ul className="my-2 my-md-0 mr-md-3">
                 <li className="nav-item">
-                    <Link to="/profile" className="p-2 text-white text-decoration-none">{user?.first_name}</Link>
+                    <Link to="/profile" className="p-2 text-white text-decoration-none">{user?.name}</Link>
                 </li>
                 <li className="nav-item">
                     <Link to="/login" className="p-2 text-white text-decoration-none"

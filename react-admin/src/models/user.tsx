@@ -6,4 +6,8 @@ export class User {
         public last_name: string = '',
         public email: string = '',
     ) { }
+
+    get name() {
+        return this.first_name + ' ' + this.last_name;
+    }
 }
