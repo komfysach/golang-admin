@@ -1,75 +1,64 @@
-import React, { Component, SyntheticEvent } from 'react';
+import React, { SyntheticEvent, useState } from 'react';
 import axios from 'axios';
-import '../Register.css'
 import { Redirect } from 'react-router-dom';
+import '../Register.css';
 
-class Register extends Component {
-    first_name = '';
-    last_name = '';
-    email = '';
-    password = '';
-    password_confirm = '';
-    state = {
-        redirect: false
-    };
+const Register = () => {
+    const [firstName, setFirstName] = useState('');
+    const [lasttName, setLastName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [redirect, setRedirect] = useState(false);
 
-    submit = async (e: SyntheticEvent) => {
+    const submit = async (e: SyntheticEvent) => {
         e.preventDefault();
 
-        const response = await axios.post("http://127.0.0.1:8000/api/register", {
-            first_name: this.first_name,
-            last_name: this.last_name,
-            email: this.email,
-            password: this.password,
-            password_confirm: this.password_confirm,
+        await axios.post('register', {
+            first_name: firstName,
+            last_name: lasttName,
+            email: email,
+            password: password,
+            password_confirm: confirmPassword
         });
 
-        console.log(response);
 
-        this.setState({
-            redirect: true
-        });
+        setRedirect(true);
+
     }
 
-
-
-    render() {
-
-        if (this.state.redirect) {
-            return <Redirect to={'/login'} />;
-        }
-
-        return (
-            <main className="form-signin">
-                <form onSubmit={this.submit}>
-                    <h1 className="h3 mb-3 fw-normal">Please register</h1>
-                    <input className="form-control" placeholder="First Name" required
-                        onChange={e => this.first_name = (e.target.value)}
-                    />
-
-                    <input className="form-control" placeholder="Last Name" required
-                        onChange={e => this.last_name = (e.target.value)}
-                    />
-
-                    <input type="email" className="form-control" placeholder="name@example.com" required
-                        onChange={e => this.email = (e.target.value)}
-                    />
-
-                    <input type="password" className="form-control" placeholder="Password" required
-                        onChange={e => this.password = (e.target.value)}
-                    />
-
-                    <input type="password" className="form-control" placeholder="Password Confirm" required
-                        onChange={e => this.password_confirm = (e.target.value)}
-                    />
-
-                    <button className="w-100 btn btn-lg btn-primary" type="submit">Register</button>
-                </form>
-            </main>
-
-        );
+    if (redirect) {
+        return <Redirect to="/login" />
     }
-}
 
+    return (
+        <div>
+            <form className="form-signin" onSubmit={submit}>
+                <h1 className="h3 mb-3 fw-normal">Please register</h1>
+                <input className="form-control" placeholder="First Name" required
+                    onChange={e => setFirstName(e.target.value)}
+                />
+
+                <input className="form-control" placeholder="Last Name" required
+                    onChange={e => setLastName(e.target.value)}
+                />
+
+                <input type="email" className="form-control" placeholder="name@example.com" required
+                    onChange={e => setEmail(e.target.value)}
+                />
+
+                <input type="password" className="form-control" placeholder="Password" required
+                    onChange={e => setPassword(e.target.value)}
+                />
+
+                <input type="password" className="form-control" placeholder="Password Confirm" required
+                    onChange={e => setConfirmPassword(e.target.value)}
+                />
+
+                <button className="w-100 btn btn-lg btn-primary" type="submit">Register</button>
+            </form>
+        </div>
+    );
+};
 
 export default Register;
