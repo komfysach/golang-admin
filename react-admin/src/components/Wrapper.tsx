@@ -1,7 +1,8 @@
 import axios from 'axios';
-import React, { Component, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Menu from './Menu'
 import { Redirect } from 'react-router';
+import Nav from './Nav';
 
 const Wrapper = (props: any) => {
     const [redirect, setRedirect] = useState(false);
@@ -24,11 +25,10 @@ const Wrapper = (props: any) => {
 
     return (
         <>
-
+            <Nav />
             <div className="container-fluid">
                 <div className="row">
                     <Menu />
-
                     <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                         {props.children}
                     </main>

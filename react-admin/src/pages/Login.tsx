@@ -17,7 +17,6 @@ const Login = ({ setLogin }: { setLogin: Function }) => {
         });
 
         setRedirect(true);
-        setLogin();
     }
 
     if (redirect) {
