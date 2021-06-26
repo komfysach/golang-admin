@@ -31,7 +31,7 @@ func IsAuthorized(c *fiber.Ctx, page string) error {
 		Id: user.RoleId,
 	}
 
-	database.DB.Preload("Permission").Find(&role)
+	database.DB.Preload("Permissions").Find(&role)
 
 	if c.Method() == "GET" {
 		for _, permission := range role.Permissions {
