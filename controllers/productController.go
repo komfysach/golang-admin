@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"goadmin/database"
+	"goadmin/middlewares"
 	"goadmin/models"
 	"strconv"
 
@@ -9,6 +10,9 @@ import (
 )
 
 func AllProducts(c *fiber.Ctx) error {
+	if err := middlewares.IsAuthorized(c, "products"); err != nil {
+		return err
+	}
 	page, _ := strconv.Atoi(c.Query("page", "1"))
 
 	return c.JSON(models.Paginate(database.DB, &models.Product{}, page))
@@ -27,6 +31,9 @@ func CreateProduct(c *fiber.Ctx) error {
 }
 
 func GetProducts(c *fiber.Ctx) error {
+	if err := middlewares.IsAuthorized(c, "products"); err != nil {
+		return err
+	}
 	id, _ := strconv.Atoi(c.Params("id"))
 
 	product := models.Product{
@@ -39,6 +46,9 @@ func GetProducts(c *fiber.Ctx) error {
 }
 
 func UpdateProduct(c *fiber.Ctx) error {
+	if err := middlewares.IsAuthorized(c, "products"); err != nil {
+		return err
+	}
 	id, _ := strconv.Atoi(c.Params("id"))
 
 	product := models.Product{
@@ -55,6 +65,9 @@ func UpdateProduct(c *fiber.Ctx) error {
 }
 
 func DeleteProduct(c *fiber.Ctx) error {
+	if err := middlewares.IsAuthorized(c, "products"); err != nil {
+		return err
+	}
 	id, _ := strconv.Atoi(c.Params("id"))
 
 	product := models.Product{

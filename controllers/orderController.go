@@ -3,6 +3,7 @@ package controllers
 import (
 	"encoding/csv"
 	"goadmin/database"
+	"goadmin/middlewares"
 	"goadmin/models"
 	"os"
 	"strconv"
@@ -11,6 +12,9 @@ import (
 )
 
 func AllOrders(c *fiber.Ctx) error {
+	if err := middlewares.IsAuthorized(c, "products"); err != nil {
+		return err
+	}
 	page, _ := strconv.Atoi(c.Query("page", "1"))
 
 	return c.JSON(models.Paginate(database.DB, &models.Order{}, page))
@@ -27,6 +31,7 @@ func Export(c *fiber.Ctx) error {
 }
 
 func CreateFile(filepath string) error {
+
 	file, err := os.Create(filepath)
 
 	if err != nil {

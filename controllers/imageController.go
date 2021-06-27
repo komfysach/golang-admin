@@ -1,8 +1,15 @@
 package controllers
 
-import "github.com/gofiber/fiber/v2"
+import (
+	"goadmin/middlewares"
+
+	"github.com/gofiber/fiber/v2"
+)
 
 func Upload(c *fiber.Ctx) error {
+	if err := middlewares.IsAuthorized(c, "products"); err != nil {
+		return err
+	}
 	form, err := c.MultipartForm()
 
 	if err != nil {

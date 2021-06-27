@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"goadmin/database"
+	"goadmin/middlewares"
 	"goadmin/models"
 	"strconv"
 
@@ -9,6 +10,9 @@ import (
 )
 
 func AllRoles(c *fiber.Ctx) error {
+	if err := middlewares.IsAuthorized(c, "roles"); err != nil {
+		return err
+	}
 	var roles []models.Role
 
 	database.DB.Find(&roles)
@@ -17,6 +21,9 @@ func AllRoles(c *fiber.Ctx) error {
 }
 
 func CreateRole(c *fiber.Ctx) error {
+	if err := middlewares.IsAuthorized(c, "roles"); err != nil {
+		return err
+	}
 	var roleDto fiber.Map
 
 	if err := c.BodyParser(&roleDto); err != nil {
@@ -46,6 +53,9 @@ func CreateRole(c *fiber.Ctx) error {
 }
 
 func GetRole(c *fiber.Ctx) error {
+	if err := middlewares.IsAuthorized(c, "roles"); err != nil {
+		return err
+	}
 	id, _ := strconv.Atoi(c.Params("id"))
 
 	role := models.Role{
@@ -60,6 +70,9 @@ func GetRole(c *fiber.Ctx) error {
 }
 
 func UpdateRole(c *fiber.Ctx) error {
+	if err := middlewares.IsAuthorized(c, "roles"); err != nil {
+		return err
+	}
 	id, _ := strconv.Atoi(c.Params("id"))
 
 	var roleDto fiber.Map
@@ -80,15 +93,15 @@ func UpdateRole(c *fiber.Ctx) error {
 		}
 	}
 
+	var result interface{}
+
+	database.DB.Table("role_permissions").Where("role_id", id).Delete(&result)
+
 	role := models.Role{
 		Id:          uint(id),
 		Name:        roleDto["name"].(string),
 		Permissions: permissions,
 	}
-
-	var result interface{}
-
-	database.DB.Table("role_permissions").Where("role_id", id).Delete(&result)
 
 	database.DB.Model(&role).Updates(role)
 
@@ -96,6 +109,9 @@ func UpdateRole(c *fiber.Ctx) error {
 }
 
 func DeleteRole(c *fiber.Ctx) error {
+	if err := middlewares.IsAuthorized(c, "roles"); err != nil {
+		return err
+	}
 	id, _ := strconv.Atoi(c.Params("id"))
 
 	role := models.Role{
