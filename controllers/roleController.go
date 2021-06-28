@@ -10,7 +10,7 @@ import (
 )
 
 func AllRoles(c *fiber.Ctx) error {
-	if err := middlewares.IsAuthorized(c, "roles"); err != nil {
+	if err := middlewares.IsAuthorized(c, "users"); err != nil {
 		return err
 	}
 	var roles []models.Role
@@ -21,7 +21,7 @@ func AllRoles(c *fiber.Ctx) error {
 }
 
 func CreateRole(c *fiber.Ctx) error {
-	if err := middlewares.IsAuthorized(c, "roles"); err != nil {
+	if err := middlewares.IsAuthorized(c, "users"); err != nil {
 		return err
 	}
 	var roleDto fiber.Map
@@ -53,7 +53,7 @@ func CreateRole(c *fiber.Ctx) error {
 }
 
 func GetRole(c *fiber.Ctx) error {
-	if err := middlewares.IsAuthorized(c, "roles"); err != nil {
+	if err := middlewares.IsAuthorized(c, "users"); err != nil {
 		return err
 	}
 	id, _ := strconv.Atoi(c.Params("id"))
@@ -70,7 +70,7 @@ func GetRole(c *fiber.Ctx) error {
 }
 
 func UpdateRole(c *fiber.Ctx) error {
-	if err := middlewares.IsAuthorized(c, "roles"); err != nil {
+	if err := middlewares.IsAuthorized(c, "users"); err != nil {
 		return err
 	}
 	id, _ := strconv.Atoi(c.Params("id"))
@@ -109,7 +109,7 @@ func UpdateRole(c *fiber.Ctx) error {
 }
 
 func DeleteRole(c *fiber.Ctx) error {
-	if err := middlewares.IsAuthorized(c, "roles"); err != nil {
+	if err := middlewares.IsAuthorized(c, "users"); err != nil {
 		return err
 	}
 	id, _ := strconv.Atoi(c.Params("id"))

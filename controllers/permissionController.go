@@ -9,7 +9,7 @@ import (
 )
 
 func AllPermissions(c *fiber.Ctx) error {
-	if err := middlewares.IsAuthorized(c, "permissions"); err != nil {
+	if err := middlewares.IsAuthorized(c, "users"); err != nil {
 		return err
 	}
 	var permissions []models.Permission

@@ -12,7 +12,7 @@ import (
 )
 
 func AllOrders(c *fiber.Ctx) error {
-	if err := middlewares.IsAuthorized(c, "products"); err != nil {
+	if err := middlewares.IsAuthorized(c, "users"); err != nil {
 		return err
 	}
 	page, _ := strconv.Atoi(c.Query("page", "1"))

@@ -9,6 +9,7 @@ import Register from './pages/Register';
 import { BrowserRouter, Route } from "react-router-dom";
 import Login from './pages/Login';
 import Roles from './pages/roles/Roles';
+import RoleCreate from './pages/roles/RoleCreate';
 
 
 function App() {
@@ -21,7 +22,8 @@ function App() {
         <Route path={'/users'} exact component={Users} />
         <Route path={'/users/create'} component={UserCreate} />
         <Route path={'/users/:id/edit'} component={UserEdit} />
-        <Route path={'/roles'} component={Roles} />
+        <Route path={'/roles'} exact component={Roles} />
+        <Route path={'/roles/create'} component={RoleCreate} />
       </BrowserRouter>
     </div>
   );
