@@ -37,7 +37,7 @@ const RoleEdit = (props: any) => {
     const submit = async (e: SyntheticEvent) => {
         e.preventDefault();
 
-        await axios.post('roles', {
+        await axios.put('roles', {
             name,
             permissions: selected
         });
