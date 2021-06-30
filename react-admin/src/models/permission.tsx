@@ -1,6 +1,6 @@
 export class Permission {
     constructor(
-        public Id: number = 0,
+        public id: number = 0,
         public name: string = '',
     ) {
 

@@ -34,7 +34,7 @@ func (user *User) Count(db *gorm.DB) int64 {
 func (user *User) Take(db *gorm.DB, limit int, offset int) interface{} {
 	var products []User
 
-	db.Preload("Role").Offset(offset).Limit(limit).Find(&products)
+	db.Offset(offset).Limit(limit).Find(&products)
 
 	return products
 

@@ -5,7 +5,7 @@ import Wrapper from '../../components/Wrapper';
 import { Permission } from '../../models/permission';
 import { Redirect } from 'react-router';
 
-const RoleCreate = () => {
+const RoleEdit = (props: any) => {
     const [permissions, setPermissions] = useState([]);
     const [selected, setSelected] = useState([] as String[]);
     const [name, setName] = useState('');
@@ -14,9 +14,15 @@ const RoleCreate = () => {
     useEffect(() => {
         (
             async () => {
-                const { data } = await axios.get('permissions');
+                const res = await axios.get('permissions');
 
-                setPermissions(data);
+                setPermissions(res.data);
+
+                const { data } = await axios.get(`roles/${props.match.params.id}`);
+
+                setName(data.name);
+                setSelected(data.permissions.map((p: Permission) => String(p.id)));
+
             }
         )();
     }, []);
@@ -46,7 +52,9 @@ const RoleCreate = () => {
             <form onSubmit={submit}>
                 <div className="mb-3">
                     <label>Name</label>
-                    <input className="form-control" onChange={e => setName(e.target.value)} />
+                    <input className="form-control"
+                        defaultValue={name}
+                        onChange={e => setName(e.target.value)} />
                 </div>
 
                 <div className="mb-3 row">
@@ -57,6 +65,7 @@ const RoleCreate = () => {
                                 <div className="form-check form-check-inline col-3" key={p.id}>
                                     <input className="form-check-input" type="checkbox"
                                         value={p.id}
+                                        defaultChecked={selected.some(s => s === (String(p.id)))}
                                         onChange={() => check(String(p.id))}
                                     />
                                     <label className="form-check-label">{p.name}</label>
@@ -71,4 +80,4 @@ const RoleCreate = () => {
     );
 }
 
-export default RoleCreate;
+export default RoleEdit;
